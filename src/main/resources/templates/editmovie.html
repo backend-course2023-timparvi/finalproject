@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form th:object="${movie}" th:action="@{/update}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    
+    		<label for="movieName">Name</label>
+			<input type="text" id="movieName" th:field="*{movieName}"/>
+			
+			<label for="releaseYear">Year</label>
+			<input type="text" id="releaseYear" th:field="*{releaseYear}"/>
+			
+			<label for="director">Director</label>
+			<input type="text" id="director" th:field="*{director}"/>
+			
+			<label for="catlist">Category</label>
+			 <select id="catlist" th:field="*{category}" class="form-control">
+       			<option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+			</select>
+			
+			
+			<label for="rating">IMDB</label>
+			<input type="text" id="rating" th:field="*{rating}" />
+    
+    <input type="submit" value="Save Changes" />
+</form>
+
+</body>
+</html>
