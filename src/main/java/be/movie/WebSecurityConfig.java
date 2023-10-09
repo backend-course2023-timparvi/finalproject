@@ -22,17 +22,24 @@ public class WebSecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-		
+	
 	http
+	//POST, PUT tai DELETE ei toimi csrf:n kanssa
+	//.csrf(csrf -> csrf.disable())
 	.authorizeHttpRequests(authorize -> authorize
 			.requestMatchers(antMatcher("/css/**")).permitAll()
 			.requestMatchers(antMatcher("/signup")).permitAll()
 			.requestMatchers(antMatcher("/saveuser")).permitAll()
+			
+			//API:a varten ->
+			//.requestMatchers(antMatcher("/api/movies")).permitAll()
+			//.requestMatchers(antMatcher("/api/movie/{id}")).permitAll()
+			
 			.anyRequest().authenticated()
 	)
 	.headers(headers -> headers
 			.frameOptions(frameoptions -> 
-			frameoptions.disable() //for h2 console			
+			frameoptions.disable()		
 		    )
 	)
 	.formLogin(formlogin -> formlogin

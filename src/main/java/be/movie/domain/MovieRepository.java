@@ -7,5 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface MovieRepository extends CrudRepository<Movie, Long> {
 	
 	List<Movie> findByMovieName(String movieName);
+	List<Movie> findByDirector(String directorName);
+	
 
 }

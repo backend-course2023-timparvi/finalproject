@@ -1,5 +1,6 @@
 package be.movie.web;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import be.movie.domain.CategoryRepository;
 import be.movie.domain.Movie;
@@ -67,5 +69,13 @@ public class MovieController {
 	public String updateMovie(@ModelAttribute Movie editedMovie) {
 		mrepository.save(editedMovie);
 		return "redirect:/index";
+	}
+	
+	@GetMapping("/director/{directorName}")
+	public String getMoviesByDirector(@PathVariable String directorName, Model model) {
+	    List<Movie> moviesByDirector = mrepository.findByDirector(directorName);
+	    model.addAttribute("movies", moviesByDirector);
+	    model.addAttribute("director", directorName);
+	    return "directormovies";
 	}
 }
