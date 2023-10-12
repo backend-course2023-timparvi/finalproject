@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
 
 
 @Entity
@@ -13,9 +14,20 @@ public class Movie {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
+	
+	@NotEmpty(message = "Please add movie name")
 	private String movieName;
-	private int	releaseYear;
+	
+	@NotNull(message = "Please add a year")
+	@Min(value = 1888, message = "Year must be greater than or equal to 1888")
+	@Max(value = 2050, message = "Year must be less than or equal to 2050")
+	private Integer releaseYear;
+	
+	@NotEmpty(message = "Please add director name")
 	private String director;
+	
+	@DecimalMin(value = "0.1", message = "Rating cannot be zero or less")
+	@DecimalMax(value = "10.0", message = "Rating cannot be greater than 10")
 	private double rating;
 	
 	@ManyToOne
@@ -52,11 +64,11 @@ public class Movie {
 	}
 
 
-	public int getReleaseYear() {
+	public Integer getReleaseYear() {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(int releaseYear) {
+	public void setReleaseYear(Integer releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 

@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import be.movie.domain.CategoryRepository;
 import be.movie.domain.Movie;
 import be.movie.domain.MovieRepository;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -44,7 +44,11 @@ public class MovieController {
 	        return "addmovie";
 	    }     
 	@PostMapping("save")
-	public String save(Movie movie) {
+	public String save(@Valid Movie movie, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("categories", crepository.findAll());
+			return "addmovie";
+		}
 		mrepository.save(movie);
 		return "redirect:index";
 	}
@@ -66,7 +70,11 @@ public class MovieController {
 	}
 	
 	@PostMapping("/update")
-	public String updateMovie(@ModelAttribute Movie editedMovie) {
+	public String updateMovie(@Valid @ModelAttribute Movie editedMovie, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("categories", crepository.findAll());
+			return "editmovie";
+		}
 		mrepository.save(editedMovie);
 		return "redirect:/index";
 	}
