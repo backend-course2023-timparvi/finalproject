@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{fragments :: common-head}">
     <title>Edit movie</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
@@ -15,6 +15,7 @@
 	</style>
 </head>
 <body>
+	<h2>Edit movie</h2>
 	<form th:object="${movie}" th:action="@{/update}" method="post">
     <input type="hidden" th:field="*{id}" />
     
@@ -35,7 +36,7 @@
 			<label for="rating">IMDB</label>
 			<input type="text" id="rating" th:field="*{rating}" />
     
-    		<input type="submit" value="Save Changes" />
+    		<input type="submit" value="Save Changes" class="btn btn-primary"/>
     		<br />
     		
     		<!-- Error messages -->
@@ -44,7 +45,10 @@
 			<span th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}" class="error"></span>
 			<span th:if="${#fields.hasErrors('director')}" th:errors="*{director}" class="error"></span>
 			<span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error"></span>
+			<a href="/index">Back to Index</a>
+    		
+    		
+    		
 </form>
-
 </body>
 </html>

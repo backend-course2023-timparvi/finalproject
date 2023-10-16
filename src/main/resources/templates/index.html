@@ -1,34 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head>
+<head th:replace="~{fragments :: common-head}">
     <title>Movie page</title>
+	
 </head>
 <body>
-    <h2>Welcome to the movie page</h2>
-    <table>
+	<div class="w-75 p-3">
+   <div class="d-flex justify-content-between align-items-center">
+    		<h1>Welcome to the movie page</h1>
+    	<form th:action="@{/logout}" method="post">
+        	<input type="submit" class="btn btn-outline-secondary" value="Logout" />
+    	</form>
+	</div>
+
+    <table class="table table-striped">
+		<thead class="thead-dark">
 		<tr>
 			<th>Name</th>
 			<th>Year</th>
 			<th>Director</th>
 			<th>Category</th>
-			<th>IMDb</th>	
+			<th><i class="bi bi-star-fill" style="color:yellow;"></i>IMDb</th>
+			<th sec:authorize="hasAuthority('ADMIN')"></th>
+			<th sec:authorize="hasAuthority('ADMIN')"></th>
 		</tr>
+		</thead>
 		<tr th:each = "movie: ${movies}">
 				<td th:text="${movie.movieName}"></td>
 				<td th:text="${movie.releaseYear}"></td>
 				<td><a th:href="@{'/director/' + ${movie.director}}" th:text="${movie.director}"></a></td>
 				<td th:text="${movie.category.name}"></td>
 				<td th:text="${movie.rating}"></td>
-				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{'/edit/' + ${movie.id}}">Edit</a></td>
-				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{'/delete/' + ${movie.id}}">Delete</a></td>
 				
+				<td sec:authorize="hasAuthority('ADMIN')">
+					<button type="button" class="btn btn-info">
+						<a th:href="@{'/edit/' + ${movie.id}}" style="color: white; text-decoration: none;">Edit</a>
+					</button>
+				</td>
+				
+				<td sec:authorize="hasAuthority('ADMIN')">
+					<button type="button" class="btn btn-danger">
+						<a th:href="@{'/delete/' + ${movie.id}}" style="color: white; text-decoration: none;">Delete</a>
+					</button>
+				</td>
 		</tr>
 	</table>
-	<a sec:authorize="hasAuthority('ADMIN')" href="/addmovie">Add movie</a>
-	<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logout" />
+	<button type="button" class="btn btn-primary btn-lg" sec:authorize="hasAuthority('ADMIN')">
+	<a href="/addmovie" style="color: white; text-decoration: none;">Add movie</a>
+	</button>
 </form>
-
+</div>
 </body>
 </html>

@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{fragments :: common-head}">
     <title>Movies by Director</title>
 </head>
 <body>
+	<div class="w-75 p-3">
     <h2>Movies by Director: <span th:text="${director}"></span></h2>
-    <table>
+    <table class="table table-striped">
+	<thead class="thead-dark">
         <tr>
             <th>Name</th>
             <th>Year</th>
             <th>Category</th>
-            <th>IMDb</th> 
+            <th><i class="bi bi-star-fill" style="color:yellow;"></i>IMDb</th>
         </tr>
+       </thead>
         <tr th:each="movie : ${movies}">
             <td th:text="${movie.movieName}"></td>
             <td th:text="${movie.releaseYear}"></td>
@@ -20,5 +23,6 @@
         </tr>
     </table>
     <a href="/index">Back to Index</a>
+</div>
 </body>
 </html>

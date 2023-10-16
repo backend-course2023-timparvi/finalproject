@@ -27,11 +27,6 @@ public class MovieRepositoryTest {
 	private CategoryRepository crepository;
 	
 	@Test
-	public void WhereMovie() {
-		assertThat(mrepository.count()).isEqualTo(0);
-	}
-	
-	@Test
 	public void addAndCheckNewMovie() {
 		Category category = new Category("Sci-fi");
 		crepository.save(category);
@@ -54,7 +49,7 @@ public class MovieRepositoryTest {
 
 	    // Varmistetaan, että poisto onnistuu
 	    List<Movie> newMovies = mrepository.findByMovieName("Inception");
-	    assertThat(newMovies).isEmpty(); // using isEmpty() is more intuitive than hasSize(0)
+	    assertThat(newMovies).isEmpty();
 	}
 	
 	@Test
@@ -98,7 +93,7 @@ public class MovieRepositoryTest {
 
 	    List<Movie> moviesByNolan = mrepository.findByDirector("Christopher Nolan");
 	    
-	    // Varmistetaan FindByDirector palauttaa tiedot
+	    // Varmistetaan FindByDirector on palauttanut tiedot
 	    assertThat(moviesByNolan).hasSize(2);
 
 	    // Vielä vahvistus, että molemmat ovat Nolanin

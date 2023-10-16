@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{fragments :: common-head}">
     <title>Add movie</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
-		.error {
-			color:red;
-			display: block;
-		}
-		.error-space {
-			display:block;
-			height: 20px;
-		}
+		
 	</style>
 </head>
 <body>
@@ -37,16 +30,18 @@
 			
 			<label for="rating">IMDB</label>
 			<input type="text" id="rating" th:field="*{rating}" />
-			
-			<input type="submit" value="save"></input>
+			<input type="submit" value="save" class="btn btn-primary"></input>
 			<br />
 			
 			<!-- Error messages -->
-			
 			<span th:if="${#fields.hasErrors('movieName')}" th:errors="*{movieName}" class="error"></span>
 			<span th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}" class="error"></span>
 			<span th:if="${#fields.hasErrors('director')}" th:errors="*{director}" class="error"></span>
 			<span th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error"></span>
+			<a href="/index">Back to Index</a>
+			
+
+
 			
 		</form>
 	</div>
