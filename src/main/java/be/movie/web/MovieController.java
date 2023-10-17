@@ -30,7 +30,7 @@ public class MovieController {
 	
     private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
-	 @GetMapping("/index")
+	 @GetMapping(value = {"/index", "/"})
 	    public String showIndexPage(Model model) {
 		 	logger.info("Accessing index page");
 		 	model.addAttribute("movies", mrepository.findAll());
