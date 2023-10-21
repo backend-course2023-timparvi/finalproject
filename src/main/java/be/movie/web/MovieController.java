@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import be.movie.domain.CategoryRepository;
 import be.movie.domain.Movie;
 import be.movie.domain.MovieRepository;
@@ -22,17 +27,17 @@ import jakarta.validation.Valid;
 
 @Controller
 public class MovieController {
+	
+	 private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
+	
 	@Autowired
 	private MovieRepository mrepository;
 	
 	@Autowired
 	private CategoryRepository crepository;
 	
-    private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
-
 	 @GetMapping(value = {"/index", "/"})
 	    public String showIndexPage(Model model) {
-		 	logger.info("Accessing index page");
 		 	model.addAttribute("movies", mrepository.findAll());
 	        return "index";
 	    }
@@ -53,11 +58,16 @@ public class MovieController {
 		return "redirect:index";
 	}
 	
-	@GetMapping("/delete/{id}")
+	@PostMapping("/delete")
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String deleteMovie(@PathVariable Long id) {
-		mrepository.deleteById(id);
-		return "redirect:/index";
+	public String deleteMovie(@RequestParam Long id) {
+		try {
+	        logger.info("Deleting movie with ID: {}", id);
+	        mrepository.deleteById(id);
+	    } catch (EmptyResultDataAccessException e) {
+	        logger.error("Error deleting movie with ID: {}. Movie not found.", id);
+	    }
+	    return "redirect:/index";
 	}
 	
 	@GetMapping("/edit/{id}")
