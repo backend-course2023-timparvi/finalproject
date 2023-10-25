@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import be.movie.domain.Movie;
 import be.movie.domain.MovieRepository;
 import be.movie.exception.ResourceNotFoundException;
+import jakarta.validation.Valid;
 
 @RestController
 public class MovieRestController {
@@ -38,12 +39,7 @@ public class MovieRestController {
 	}
 	
 	@PostMapping("/api/movies")
-	public @ResponseBody Movie addMovie(@RequestBody Movie movie) {
-		if(movie.getMovieName() == null || movie.getMovieName().isEmpty()) {
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST, "Movie Name is required"
-			);
-		}
+	public @ResponseBody Movie addMovie(@Valid @RequestBody Movie movie) {
 		return mrepository.save(movie);
 	}
 	

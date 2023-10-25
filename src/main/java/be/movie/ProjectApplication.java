@@ -20,7 +20,7 @@ public class ProjectApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner initUsers(MovieRepository mrepository ,AppUserRepository urepository) {
+	public CommandLineRunner initUsers(AppUserRepository urepository) {
 	    return (args) -> {
 	 	
 	    	/*if (urepository.findByUsername("user") == null) {

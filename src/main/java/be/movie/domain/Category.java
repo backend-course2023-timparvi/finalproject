@@ -20,7 +20,7 @@ public class Category {
 	private Long categoryid;
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "category")
 	@JsonIgnore
 	private List<Movie> movies;
 

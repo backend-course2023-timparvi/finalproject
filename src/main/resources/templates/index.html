@@ -34,18 +34,14 @@
                 <td th:text="${movie.category.name}"></td>
                 <td th:text="${movie.rating}"></td>
                 <td sec:authorize="hasAuthority('ADMIN')">
-                    <button type="button" class="btn btn-info">
-                        <a th:href="@{'/edit/' + ${movie.id}}" style="color: white; text-decoration: none;">Edit</a>
-                    </button>
+                    <a th:href="@{'/edit/' + ${movie.id}}" class="btn btn-info" style="color: white; text-decoration: none;">Edit</a>
                 </td>
                 <td sec:authorize="hasAuthority('ADMIN')">
                     <button type="button" class="btn btn-danger" data-target="#deleteModal" data-toggle="modal" th:onclick="'setMovieId(' + ${movie.id} + ')' ">Delete</button>
                 </td>
             </tr>
         </table>
-        <button type="button" class="btn btn-primary btn-lg" sec:authorize="hasAuthority('ADMIN')">
-            <a href="/addmovie" style="color: white; text-decoration: none;">Add movie</a>
-        </button>
+      	<a href="/addmovie" class="btn btn-primary btn-lg" sec:authorize="hasAuthority('ADMIN')" style="color: white; text-decoration: none;">Add movie</a>
     </div>
 
     <!-- Modal -->
@@ -59,7 +55,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete?</p>
+                    <p>Are you sure you want to delete the movie?</p>
                 </div>
                 <div class="modal-footer">
                     <form th:action="@{/delete}" method="post" id="deleteForm">

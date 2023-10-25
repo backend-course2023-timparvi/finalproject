@@ -24,12 +24,11 @@ public class WebSecurityConfig {
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 	
 	http
-	//POST, PUT tai DELETE ei toimi csrf:n kanssa
+	//POST, PUT tai DELETE ei toimi csrf suojan kanssa
 	//.csrf(csrf -> csrf.disable())
 	.authorizeHttpRequests(authorize -> authorize
 			.requestMatchers(antMatcher("/css/**")).permitAll()
 			.requestMatchers(antMatcher("/signup")).permitAll()
-			.requestMatchers(antMatcher("/saveuser")).permitAll()
 			
 			//API:a varten ->
 			//.requestMatchers(antMatcher("/api/movies")).permitAll()
